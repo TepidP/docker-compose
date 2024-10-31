@@ -1,0 +1,32 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    network_mode: 'bridge'
+    group_add:
+      - "105"
+    devices:
+      - /dev/dri/renderD128:/dev/dri/renderD128
+    ports:
+      - 8096:8096
+    volumes:
+      - /var/lib/docker/volumes/50981fc98c1b16ea0496d46ee552fa3c8cfc4727adda3ac7237b207d56ff920f/_data:/config
+      - /var/lib/docker/volumes/792a9ffbf717e9f9c7fa414e3193598f5a9b7b88ebc960714d939ac25cfd3120/_data:/cache
+      - type: bind
+        source: /media/noe/Media/Movies
+        target: /movies
+      - type: bind
+        source: /media/golbat/Media/Shows
+        target: /shows
+    restart: 'unless-stopped'
+
+  homeassistant:
+    container_name: homeassistant
+    image: "ghcr.io/home-assistant/home-assistant:stable"
+    volumes:
+      - /home/debian/docker/vol/home_assisant/config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
