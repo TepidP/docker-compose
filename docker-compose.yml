@@ -30,3 +30,23 @@ services:
     restart: unless-stopped
     privileged: true
     network_mode: host
+
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Etc/UTC
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - /var/lib/docker/volumes/595c3d8defc06a6ed4b15ca93c2e0c51d07a3c03e696c8fa0ce074e88b5aa0bc/_data:/config
+      - /media/noe/Media/Movies:/Movies
+      - /media/seed:/Seed
+      - /media/golbat/Media/Shows:/Shows
+    ports:
+      - 8080:8080
+      - 6881:6881
+      - 6881:6881/udp
+    restart: unless-stopped
