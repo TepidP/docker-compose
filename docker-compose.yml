@@ -2,7 +2,7 @@ services:
   jellyfin:
     image: jellyfin/jellyfin:latest
     container_name: jellyfin
-    network_mode: 'bridge'
+    network_mode: "bridge"
     group_add:
       - "105"
     devices:
@@ -18,7 +18,7 @@ services:
       - type: bind
         source: /media/golbat/Media/Shows
         target: /shows
-    restart: 'unless-stopped'
+    restart: "unless-stopped"
 
   homeassistant:
     container_name: homeassistant
@@ -83,3 +83,14 @@ services:
       - /home/debian/docker/vol/home_page/config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    ports:
+      - 9000:9000
+    volumes:
+      - data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+volumes:
+  data:
