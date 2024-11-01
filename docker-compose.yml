@@ -10,8 +10,8 @@ services:
     ports:
       - 8096:8096
     volumes:
-      - /var/lib/docker/volumes/50981fc98c1b16ea0496d46ee552fa3c8cfc4727adda3ac7237b207d56ff920f/_data:/config
-      - /var/lib/docker/volumes/792a9ffbf717e9f9c7fa414e3193598f5a9b7b88ebc960714d939ac25cfd3120/_data:/cache
+      - jellyfin-config:/config
+      - jellyfin-cache:/cache
       - type: bind
         source: /media/noe/Media/Movies
         target: /movies
@@ -24,7 +24,7 @@ services:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
     volumes:
-      - /home/debian/docker/vol/home_assisant/config:/config
+      - homeassistant-config:/config
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
@@ -60,7 +60,7 @@ services:
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy
     volumes:
-      - /home/debian/.wg-easy:/etc/wireguard
+      - wireguard-data:/etc/wireguard
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"
@@ -80,17 +80,24 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - /home/debian/docker/vol/home_page/config:/app/config # Make sure your local config directory exists
+      - homepage-config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
 
   portainer:
     image: portainer/portainer-ce:latest
+    container_name: portainer
     ports:
       - 9000:9000
     volumes:
-      - data:/data
+      - portainer-data:/data
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
 volumes:
-  data:
+  portainer-data:
+  jellyfin-config:
+  jellyfin-cache:
+  qbittorrent-data:
+  homepage-config:
+  wireguard-data:
+  homeassistant-config:
