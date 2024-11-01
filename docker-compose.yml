@@ -53,7 +53,7 @@ services:
   wg-easy:
     environment:
       - LANG=en
-      - WG_HOST=debain.dukcdns.org
+      - WG_HOST=debain.duckdns.org
       - PASSWORD_HASH=$$2a$$12$$mHqvUP7UDU8T6Vm5D26PHuSeFkIaWerhvie/RXl2xBTtGPdo9GBFK
       - PORT=51821
       - WG_PORT=51820
