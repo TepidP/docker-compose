@@ -71,3 +71,15 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    environment:
+      PUID: 1000 # optional, your user id
+      PGID: 1000 # optional, your group id
+    ports:
+      - 3000:3000
+    volumes:
+      - /home/debian/docker/vol/home_page/config:/app/config # Make sure your local config directory exists
+      - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
+    restart: unless-stopped
