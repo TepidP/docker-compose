@@ -50,3 +50,24 @@ services:
       - 6881:6881
       - 6881:6881/udp
     restart: unless-stopped
+  wg-easy:
+    environment:
+      - LANG=en
+      - WG_HOST=debain.dukcdns.org
+      - PASSWORD_HASH=$$2a$$12$$mHqvUP7UDU8T6Vm5D26PHuSeFkIaWerhvie/RXl2xBTtGPdo9GBFK
+      - PORT=51821
+      - WG_PORT=51820
+    image: ghcr.io/wg-easy/wg-easy
+    container_name: wg-easy
+    volumes:
+      - /home/debian/.wg-easy:/etc/wireguard
+    ports:
+      - "51820:51820/udp"
+      - "51821:51821/tcp"
+    restart: unless-stopped
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    sysctls:
+      - net.ipv4.ip_forward=1
+      - net.ipv4.conf.all.src_valid_mark=1
