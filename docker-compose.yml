@@ -41,10 +41,11 @@ services:
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
     volumes:
-      - /var/lib/docker/volumes/595c3d8defc06a6ed4b15ca93c2e0c51d07a3c03e696c8fa0ce074e88b5aa0bc/_data:/config
+      - qbittorrent-data:/config
       - /media/noe/Media/Movies:/Movies
       - /media/seed:/Seed
       - /media/golbat/Media/Shows:/Shows
+      - /media/golbat/Media/Shows/Detective Conan:/Conan
     ports:
       - 8080:8080
       - 6881:6881
@@ -80,7 +81,7 @@ services:
     ports:
       - 3000:3000
     volumes:
-      - homepage-config:/app/config # Make sure your local config directory exists
+      - /home/debian/docker/vol/home_page/app/config:/app/config # Make sure your local config directory exists
       - /var/run/docker.sock:/var/run/docker.sock:ro # optional, for docker integrations
     restart: unless-stopped
 
@@ -98,6 +99,5 @@ volumes:
   jellyfin-config:
   jellyfin-cache:
   qbittorrent-data:
-  homepage-config:
   wireguard-data:
   homeassistant-config:
