@@ -44,6 +44,7 @@ services:
       - qbittorrent-data:/config
       - /media/noe/Media/Movies:/Movies
       - /media/seed:/Seed
+      - /media/books:/Books
       - /media/golbat/Media/Shows:/Shows
       - /media/golbat/Media/Shows/Detective Conan:/Conan
     ports:
